@@ -1,0 +1,49 @@
+<div class='panel panel-primary'>
+    <div class='panel-heading' >
+       {{pageTitle}}
+    </div>
+        <div class='panel-body'>
+            <div class='row' >
+             <div class='col-md-2'> Filter By</div>
+                <div class='col-md-4' >
+                    <input type='text'[(ngModel)]='listFilter'/>
+                </div>
+            </div>
+            <div class='row'>
+             <div class='col-md-6'>
+                <h3>Filtered by: {{listFilter}}</h3>
+            </div>
+        </div>
+    </div>
+
+    <div class='table-responsive'>
+        <table class='table' *ngIf='products && products.length'>
+            <thead>
+                <tr>
+                        <th><button (click)="showImage = !showImage" class='btn btn-primary'>{{ showImage ? 'Hide' : 'Show' }} Image</button></th>
+                        <th>Product</th>
+                        <th>Code</th>
+                        <th>Availabe</th>
+                        <th>Price</th>
+                        <th>Ratings</th>
+                </tr>
+
+            </thead>
+            <tbody>
+                <tr *ngFor='let pro of products | productFilter:listFilter'>
+                    <td> <img *ngIf='showImage' [src]='pro.imageUrl' [title]='pro.productName'   [style.width.px]='imageWidth' [style.height.px]='imageWidth'
+                        [style.margin]='imageMargin'></td>
+                    <td><a  [routerLink] =" ['/product',pro.productId]" > {{pro.productName}}</a></td>
+                    <td>{{pro.productCode }}</td>
+                    <td>{{pro.releaseDate}}</td>
+                    <td>{{pro.price | currency:'USD':true}}</td>
+                    <td><ai-star (ratingClicked)='onRatingClicked($event)' [rating]='pro.starRating'></ai-star></td>
+
+                </tr>
+            </tbody>
+
+        </table>
+
+    </div>
+</div> 
+
